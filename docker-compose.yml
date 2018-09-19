@@ -1,0 +1,16 @@
+version: "3.4"
+services:
+  dev:
+    build:
+      context: .
+      target: base
+    command: /bin/bash
+    working_dir: /code
+    volumes:
+      - .:/code
+      - gopkg:/go/pkg
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=!SQLDEV2018
+volumes:
+  gopkg:

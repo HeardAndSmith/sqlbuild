@@ -1,0 +1,8 @@
+# whitelist
+*
+!go.mod
+!go.sum
+# when moby/moby#30018 is closed we can do !**/*.go
+!main.go
+!cmd/*.go
+!lib/*.go
