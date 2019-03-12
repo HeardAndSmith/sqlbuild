@@ -1,14 +1,14 @@
 # sqlbuild
 
-This repo builds the `hslaw/mssql-build` docker image, a tool for creating `microsoft/mssql-server-linux` images with data baked in.
+This repo builds the `hslaw/mssql-build` docker image, a tool for creating `mcr.microsoft.com/mssql/server` images with data baked in.
 
 The difficulty in creating these images is that all of your scripts are written in sql, but sql server needs to be running for you to execute them. That means that a `RUN` line in your Dockerfile has to somehow start sql server, run your scripts, and then shutdown sql server.
 
-That's what this package does. The `sqlbuild` binary starts sql server, runs the passed scripts, and then shuts down sql server. The `hslaw/mssql-build` image is just stock `microsoft/mssql-server-linux` with the `sqlbuild` binary added in.
+That's what this package does. The `sqlbuild` binary starts sql server, runs the passed scripts, and then shuts down sql server. The `hslaw/mssql-build` image is just stock `mcr.microsoft.com/mssql/server` with the `sqlbuild` binary added in.
 
 ## Setup
 
-To build, you need [docker](https://www.docker.com/) installed. The `microsoft/mssql-server-linux` will fail with the default docker memory limits, so you need to bump them above 3250MB before getting started.
+To build, you need [docker](https://www.docker.com/) installed. The `mcr.microsoft.com/mssql/server` image will fail with the default docker memory limits, so you probably need to bump them above 3250MB before getting started.
 
 Usage generally looks like this:
 
@@ -19,7 +19,7 @@ COPY *.sql /migrations/
 RUN sqlbuild exec /migrations
 ```
 
-That copies your sql scripts into the `/migrations` folder and calls sqlbuild to execute them. Files are executed in lexical order. Configuration is passed using the same environment variables that the `microsoft/mssql-server-linux` image expects. The sqlserver password is set as the value of SA_PASSWORD the first time sqlbuild is run.
+That copies your sql scripts into the `/migrations` folder and calls sqlbuild to execute them. Files are executed in lexical order. Configuration is passed using the same environment variables that the `mcr.microsoft.com/mssql/server` image expects. The sqlserver password is set as the value of SA_PASSWORD the first time sqlbuild is run.
 
 Willing to answer any questions. This is early stage software.
 
