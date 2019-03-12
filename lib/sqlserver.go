@@ -163,7 +163,9 @@ func (s *SqlServer) OnUnexpectedShutdown(callback func(err error)) {
 // called right after the server is created.
 func (s *SqlServer) ExitOnUnexpectedShutdown() {
 	s.OnUnexpectedShutdown(func(err error) {
-		log.Fatalf(err.Error() + "\nThis is a fatal error, exiting now.")
+		log.Fatalf("%s\nThis is a fatal error, exiting now.",
+			err.Error(),
+		)
 	})
 }
 
